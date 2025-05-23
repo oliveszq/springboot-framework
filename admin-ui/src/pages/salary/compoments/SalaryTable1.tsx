@@ -5,7 +5,8 @@ import {SalaryState, updateTable1} from "@/pages/salary/store/salary";
 import {Table1UpdateService} from "@/pages/salary/data/table1";
 import {ProColumns} from "@ant-design/pro-table/es/typing";
 import {Input, InputNumber, Space} from "antd";
-import AGTable from "@/pages/salary/compoments/AGTable";
+import TestAGTable from "@/pages/salary/compoments/TestAGTable";
+import SalaryAGTable from "./AGTable";
 
 const SalaryTable1 = () => {
 
@@ -82,29 +83,8 @@ const SalaryTable1 = () => {
 
     return (
         <>
-            {/*<ProTable*/}
-            {/*    actionRef={actionRef}*/}
-            {/*    columns={columns}*/}
-            {/*    search={false}*/}
-            {/*    rowKey={"id"}*/}
-            {/*    virtual={true}*/}
-            {/*    pagination={{*/}
-            {/*        pageSize: 20*/}
-            {/*    }}*/}
-            {/*    scroll={{*/}
-            {/*        x:2900,*/}
-            {/*        y:800*/}
-            {/*    }}*/}
-            {/*    request={async () => {*/}
-            {/*        return {*/}
-            {/*            // table1 top 100*/}
-            {/*            data: table1,*/}
-            {/*            success: true*/}
-            {/*        }*/}
-            {/*    }}*/}
-            {/*/>*/}
-
-            <AGTable/>
+            {/* <TestAGTable/> */}
+            <SalaryAGTable></SalaryAGTable>
         </>
     )
 }

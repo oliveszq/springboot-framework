@@ -1,0 +1,83 @@
+// .custom-scrollbar .ag-body-vertical-scroll-viewport::-webkit-scrollbar {
+//   width: 16px !important;
+// }
+
+// .custom-scrollbar .ag-body-vertical-scroll-viewport::-webkit-scrollbar-thumb {
+//   min-height: 80px !important;
+//   background-color: #cccccc !important;
+//   border-radius: 7px !important;
+//   border: 3px solid transparent !important;
+//   background-clip: content-box !important;
+// }
+
+
+// .custom-scrollbar .ag-body-horizontal-scroll-viewport::-webkit-scrollbar {
+//   height: 16px !important;
+// }
+
+// .custom-scrollbar .ag-body-horizontal-scroll-viewport::-webkit-scrollbar-thumb {
+//   min-width: 80px !important;
+//   background-color: #cccccc !important;
+//   border-radius: 7px !important;
+//   border: 3px solid transparent !important;
+//   background-clip: content-box !important;
+// }
+
+// // 水平滚动条
+// .custom-scrollbar .ag-body-horizontal-scroll {
+//   height: 10px !important;
+//   max-height: 10px !important;
+//   min-height: 10px !important;
+
+//   .ag-horizontal-left-spacer{
+//     background-color: #eeeeee;
+//   }
+
+//   .ag-body-horizontal-scroll-viewport {
+//     height: 10px !important;
+//     max-height: 10px !important;
+//     min-height: 13px !important;
+//   }
+// }
+
+// // 垂直滚动条
+// .custom-scrollbar .ag-body-vertical-scroll {
+//   width: 10px !important;
+//   max-width: 10px !important;
+//   min-width: 10px !important;
+
+//   .ag-body-vertical-scroll-viewport {
+//     width: 10px !important;
+//     max-width: 10px !important;
+//     min-width: 14px !important;
+//     // min-width: 10px !important;
+
+//     // .ag-body-vertical-scroll-container {
+//     //   width: 10px !important;
+//     //   max-width: 10px !important;
+//     //   min-width: 10px !important;
+//     // }
+//   }
+// }
+
+// .custom-scrollbar .ag-header-cell {
+//   border-right: 1px solid #ccc;
+//   /* 添加垂直分隔线 */
+// }
+// .custom-scrollbar .ag-pinned-right-header {
+//   min-width: 210px !important;
+// }
+
+// .custom-scrollbar .ag-horizontal-right-spacer {
+//   margin-right: var(--pinned-right-width !important, 0);
+//   background-color: #eeeeee;
+// }
+
+// .custom-scrollbar .ag-floating-bottom {
+//   background-color: #EEE;
+//   padding-right: 4px !important;
+//  }
+
+// .custom-scrollbar .ag-header-cell-resize {
+//   opacity: 0;
+// }

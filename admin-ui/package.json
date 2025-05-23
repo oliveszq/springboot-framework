@@ -21,6 +21,7 @@
     "antd": "^5.20.6",
     "axios": "^1.7.7",
     "base64-js": "^1.5.1",
+    "font-awesome": "^4.7.0",
     "handsontable": "^15.0.0",
     "jszip": "^3.10.1",
     "lodash": "^4.17.21",

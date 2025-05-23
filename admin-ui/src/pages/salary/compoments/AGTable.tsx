@@ -1,29 +1,28 @@
-import {AgGridReact} from 'ag-grid-react';
-import {AllCommunityModule, ModuleRegistry, themeQuartz,} from "ag-grid-community";
-import {AG_GRID_LOCALE_CN} from '@ag-grid-community/locale';
-import {useCallback, useMemo, useState} from "react";
+import AGTable from "@/components/table/AGTable";
+import CustomHeader from "@/components/table/CustomHeader";
+import { Button } from "antd";
+import { useCallback, useEffect, useState } from "react";
 
-const localeText = AG_GRID_LOCALE_CN;
-// Register all Community features
-ModuleRegistry.registerModules([AllCommunityModule]);
-
-
-const myTheme = themeQuartz.withParams({
-    /* Low spacing = very compact */
-    spacing: 2,
-    accentColor: "red",
-
-});
-const AGTable = () => {
+const SalaryAGTable = () => {
     const [rowData, setRowData] = useState();
     const [columnDefs, setColumnDefs] = useState([
         {
             field: "athlete",
-            headerName: "运动员"
+            headerName: "运动员",
+            headerComponent: (params: any) => {
+                return CustomHeader({
+                    params,
+                });
+            }
         },
         {
             field: "age",
-            headerName: "年龄"
+            headerName: "年龄",
+            headerComponent: (params: any) => {
+                return CustomHeader({
+                    params,
+                });
+            }
         },
         {
             field: "country",
@@ -33,27 +32,95 @@ const AGTable = () => {
                 {
                     field: "country",
                     headerName: "国家",
+                    headerComponent: (params: any) => {
+                        return CustomHeader({
+                            params,
+                        });
+                    }
                 },
-                {field: "name"},
-                {field: "code"}
-            ]
+                {
+                    field: "name",
+                    headerComponent: (params: any) => {
+                        return CustomHeader({
+                            params,
+                        });
+                    }
+                },
+                {
+                    field: "code",
+                    headerComponent: (params: any) => {
+                        return CustomHeader({
+                            params,
+                        });
+                    }
+                }
+            ],
+
         },
-        {field: "year", headerName: "年份"},
-        {field: "date", headerName: "日期"},
-        {field: "sport", headerName: "运动"},
-        {field: "gold", headerName: "金牌"},
-        {field: "silver", headerName: "银牌"},
-        {field: "bronze", headerName: "铜牌"},
-        {field: "total", headerName: "总计", editable: false},
+        {
+            field: "year", headerName: "年份",
+            headerComponent: (params: any) => {
+                return CustomHeader({
+                    params,
+                });
+            }
+        },
+        {
+            field: "date", headerName: "日期",
+            headerComponent: (params: any) => {
+                return CustomHeader({
+                    params,
+                });
+            }
+        },
+        {
+            field: "sport", headerName: "运动",
+            headerComponent: (params: any) => {
+                return CustomHeader({
+                    params,
+                });
+            }
+        },
+        {
+            field: "gold", headerName: "金牌",
+            headerComponent: (params: any) => {
+                return CustomHeader({
+                    params,
+
+                });
+            }
+        },
+        {
+            field: "silver", headerName: "银牌",
+            headerComponent: (params: any) => {
+                return CustomHeader({
+                    params,
+
+                });
+            }
+        },
+        {
+            field: "bronze", headerName: "铜牌",
+            headerComponent: (params: any) => {
+                return CustomHeader({
+                    params,
+
+                });
+            }
+        },
+        {
+            field: "total", pinned: "right", headerName: "总计", editable: false,
+            headerComponent: (params: any) => {
+                return CustomHeader({
+                    params,
+
+                });
+            }
+        },
     ]);
-    const theme = useMemo(() => {
-        return myTheme;
-    }, []);
-    const defaultColDef = useMemo(() => {
-        return {
-            editable: true,
-            filter: true,
-        };
+
+    useEffect(() => {
+        onGridReady("");
     }, []);
 
     const onGridReady = useCallback((params: any) => {
@@ -62,46 +129,51 @@ const AGTable = () => {
             .then((data) => setRowData(data));
     }, []);
 
-
-    const onChange = (row:any,updateRow:(row:any)=>void,refreshColumns:()=>void)=>{
-        const gold = row.gold;
-        const silver = row.silver;
-        const bronze = row.bronze;
-        const total = gold + silver + bronze;
-
-        updateRow({...row,total});
-
-        // update redux store message
-
-        refreshColumns()
-    }
-
     return (
-        <div
-            // define a height because the Data Grid will fill the size of the parent container
-            style={{height: 900}}
-        >
-            <AgGridReact
-                rowData={rowData}
-                localeText={localeText}
-                onCellValueChanged={(event) => {
-                    //@ts-ignore
-                    if (['gold', 'silver', 'bronze'].includes(event.colDef.field)) {
-                        onChange( event.data,(data:any)=>{
-                            event.data.total = data.total;
-                        },()=>{
-                            event.api.refreshCells({columns: ['total']});
+        <>
+            <Button onClick={() => {
+                console.log("获取最新列=============>", columnDefs);
+
+            }}>获取最新列</Button>
+            <AGTable
+                columns={columnDefs}
+                data={rowData || []}
+                height={600}
+                columnDragging={true}
+                onColumnMoved={(e: any) => {
+                    // 获取新的列顺序
+                    const newOrderFields = e?.api?.getAllGridColumns?.()?.map((col: any) => col.colDef.field);
+                    console.log('newOrderFields', newOrderFields);
+                    const draggedField = e?.column?.colDef?.field;
+                    console.log('被拖拽的列名:', draggedField);
+                    if (!newOrderFields) return;
+
+                    // 递归重排 columnDefs
+                    function reorderColumns(cols: any[], order: string[]): any[] {
+                        // 处理有children的情况
+                        const flatCols = cols.map(col => {
+                            if (col.children) {
+                                return {
+                                    ...col,
+                                    children: reorderColumns(col.children, order)
+                                }
+                            }
+                            return col;
+                        });
+                        // 按 order 排序
+                        return flatCols.sort((a, b) => {
+                            return order.indexOf(a.field) - order.indexOf(b.field);
                         });
                     }
+
+                    const newColumnDefs = reorderColumns(columnDefs, newOrderFields);
+                    setColumnDefs(newColumnDefs);
+
+                    console.log("columnDragging", e);
                 }}
-                columnDefs={columnDefs}
-                theme={theme}
-                // pagination={true}
-                defaultColDef={defaultColDef}
-                onGridReady={onGridReady}
-            />
-        </div>
+            ></AGTable>
+        </>
     );
 }
 
-export default AGTable;
+export default SalaryAGTable;

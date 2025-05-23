@@ -18,17 +18,6 @@ const $Salary = () => {
         },
     ];
 
-    for (let i = 2; i < 500; i++) {
-        items.push(
-            {
-                key: i + '',
-                label: "绩效工资",
-                children: (
-                    <SalaryTable2/>
-                )
-            })
-    }
-
     const [activeKey, setActiveKey] = useState("1");
 
     const dispatch = useDispatch();
